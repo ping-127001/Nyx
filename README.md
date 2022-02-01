@@ -1,7 +1,7 @@
 # Nyx
 Repo for all things related to Nyx, website, React Native Client
 
-# Debugging Nyx Native React source
+# Debugging Nyx
 * Install electron: npm install --save-dev electron
 * npm start
 

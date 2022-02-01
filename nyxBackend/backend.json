@@ -1,0 +1,5 @@
+{
+    "killswitch" : "false",
+    "version" : "debug",
+    "debugging" : "true"
+}

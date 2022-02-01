@@ -6,7 +6,7 @@ Repo for all things related to Nyx, Nyx website, Nyx Electron App
 * npm start
 
 # Adding a node_module
-Once you added a module, do the following
+Having issues? Try these solutions
 * npm install --save-dev electron-rebuild
 * Not working? try this: .\node_modules\.bin\electron-rebuild.cmd
 

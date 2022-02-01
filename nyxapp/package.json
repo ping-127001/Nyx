@@ -1,0 +1,15 @@
+{
+  "name": "nyxapp",
+  "version": "1.0.0",
+  "description": "Nyx Electron Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "BADTEMPER, DA-XN",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^17.0.0"
+  }
+  
+}

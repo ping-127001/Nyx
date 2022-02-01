@@ -20,8 +20,4 @@ Having issues? Try these solutions
 # Electron Console Logging
 You will notice if you try to log something in a js file that it will log in your ide, not the app, here is the solution to print in the app:
 <br>
-**console.log works, but where it logs to depends on whether you call it from the main process or the renderer process.
-
-If you call it from the renderer process (i.e. JavaScript that is included from your index.html file) it will be logged to the dev tools window.
-
-If you call it from the main process (i.e. in main.js) it will work the same way as it does in Node - it will log to the terminal window. If you're starting your Electron process from the Terminal using electron . you can see your console.log calls from the main process there.**
+**console.log works, but where it logs to depends on whether you call it from the main process or the renderer process. If you call it from the renderer process (i.e. JavaScript that is included from your index.html file) it will be logged to the dev tools window. If you call it from the main process (i.e. in main.js) it will work the same way as it does in Node - it will log to the terminal window. If you're starting your Electron process from the Terminal using electron . you can see your console.log calls from the main process there.**

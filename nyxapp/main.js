@@ -17,5 +17,6 @@ function createWindow ()
       autoHideMenuBar: true, //hide menu bar
       icon: __dirname + './Images/Nyx.ico'
     })
-    win.loadFile('index.html')
+    win.setBackgroundColor('#63728a'); //set bg
+    win.loadFile('index.html');
 }

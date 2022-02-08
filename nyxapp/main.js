@@ -1,15 +1,17 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
 
 const Backend = require("./Handler/Backend.js");
 
+const Env = require("./Handler/Env.js");
 
-app.whenReady().then(() => 
+app.whenReady().then(() =>
 {
     createWindow();
     Backend.RequestData();
+    Env.getVersion();
 })
 
-function createWindow () 
+function createWindow ()
 {
     const win = new BrowserWindow({
       width: 1000,

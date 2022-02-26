@@ -7,7 +7,6 @@ let options = {json: true};
 
 function RequestData()
 {
-    console.log("Request Data function ran!");
     request(url, options, (error, res, json) => 
     {
         if (error) 
@@ -18,7 +17,7 @@ function RequestData()
         if (!error && res.statusCode == 200) 
         {
             //read data using "json" + json value name
-            console.log("Kill switch state: " + json.killswitch);
+            console.log("Kill switch state: " + json.killswitch + " Version: " + json.version + " Debugging: " + json.debugging);
         };
     });
 }

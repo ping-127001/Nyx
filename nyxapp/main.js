@@ -8,7 +8,6 @@ app.whenReady().then(() =>
 {
     createWindow();
     Backend.RequestData();
-    Env.getVersion();
 })
 
 function createWindow ()

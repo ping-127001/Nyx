@@ -19,5 +19,5 @@ function createWindow ()
       icon: __dirname + './Images/Nyx.ico'
     })
     win.setBackgroundColor('#63728a'); //set bg
-    win.loadFile('index.html');
+    win.loadFile('./html/home.html');
 }

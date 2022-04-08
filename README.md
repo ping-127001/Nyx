@@ -2,6 +2,7 @@
 Repo for all things related to Nyx, Nyx website, Nyx Electron App
 
 # Debugging Nyx
+* Make sure you are in the nyxapp directory, NOT \Nyx. cd nyxapp!
 * Install electron: npm install --save-dev electron
 * npm start
 

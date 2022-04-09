@@ -1,13 +1,19 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow} = require('electron');
 
 const Backend = require("./Handler/Backend.js");
 
 const Env = require("./Handler/Env.js");
 
+const Popup = require("./Handler/Popup.js");
+
+const Alert = require("./Handler/Alert.js");
+
 app.whenReady().then(() =>
 {
     createWindow();
     Backend.RequestData();
+    //Popup.show("Example", "Test");
+    //Alert.show("Example", "This is an alert");
 })
 
 function createWindow ()

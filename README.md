@@ -1,6 +1,10 @@
 # Nyx
 Repo for all things related to Nyx, Nyx website, Nyx Electron App
 
+# Starting the Serverside for debugging locally
+* cd nyxapp + cd Serverside
+* node index.js (this is only if you have access to the Serverside)
+
 # Debugging Nyx
 * Make sure you are in the nyxapp directory, NOT \Nyx. cd nyxapp!
 * Install electron: npm install --save-dev electron

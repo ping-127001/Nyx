@@ -22,6 +22,5 @@ function createWindow ()
         devTools: false
       }
     })
-    win.setBackgroundColor('#63728a'); //set bg
     win.loadFile('./html/home.html');
 }

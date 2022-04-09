@@ -18,15 +18,22 @@ app.whenReady().then(() =>
 
 function createWindow ()
 {
-    const win = new BrowserWindow({
-      width: 1000,
-      height: 600,
-      autoHideMenuBar: true, //hide menu bar
-      icon: __dirname + './Images/Nyx.ico',
-      webPreferences: 
-      {
-        devTools: false
-      }
-    })
-    win.loadFile('./html/home.html');
+    try
+    {
+      const win = new BrowserWindow({
+        width: 1000,
+        height: 600,
+        autoHideMenuBar: true, //hide menu bar
+        icon: __dirname + './Images/Nyx.ico',
+        webPreferences: 
+        {
+          devTools: false
+        }
+      })
+      win.loadFile('./html/home.html');
+    }
+    catch (ex)
+    {
+      Alert.show("Error", ex);
+    }
 }

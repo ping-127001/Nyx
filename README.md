@@ -19,10 +19,6 @@ Having issues after installing a module? Try these solutions
 # Electron 
 * [Electron QuickStart](https://www.electronjs.org/docs/v14-x-y/tutorial/quick-start)
 
-# Building Electron application
-* npm install -g @electron-forge/cli
-* Set-ExecutionPolicy -ExecutionPolicy Unrestricted
-
 # Electron Console Logging
 You will notice if you try to log something in a js file that it will log in your IDE, not the app, here is the solution to print in the app:
 <br>

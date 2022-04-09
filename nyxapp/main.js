@@ -16,7 +16,11 @@ function createWindow ()
       width: 1000,
       height: 600,
       autoHideMenuBar: true, //hide menu bar
-      icon: __dirname + './Images/Nyx.ico'
+      icon: __dirname + './Images/Nyx.ico',
+      webPreferences: 
+      {
+        devTools: false
+      }
     })
     win.setBackgroundColor('#63728a'); //set bg
     win.loadFile('./html/home.html');

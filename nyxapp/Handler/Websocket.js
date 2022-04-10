@@ -6,17 +6,17 @@ function send(url, data)
     {
         if (/checkStatusCode/.test(url)) 
         {
-         if (done) 
-         {
-          return;
-         }
-         done = true;
-         callback && callback('checkStatusCode');
-         exit();
+            if (done) 
+            {
+                return;
+            }
+            done = true;
+            callback && callback('checkStatusCode');
+            exit();
         } 
         else 
         {
-         ws.send(data);
+            ws.send(data);
         }
        });
 }

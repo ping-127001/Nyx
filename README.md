@@ -26,10 +26,10 @@ Having issues after installing a module? Try these solutions
 * [Electron QuickStart](https://www.electronjs.org/docs/v14-x-y/tutorial/quick-start)
 
 # Compile Nyx
-* for use in npm scripts
+* for use in npm scripts <br>
 npm install electron-packager --save-dev
 
-for use from cli
+* for use from cli <br>
 npm install electron-packager -g
 
 # Electron Console Logging

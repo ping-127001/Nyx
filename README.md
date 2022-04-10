@@ -30,7 +30,9 @@ Having issues after installing a module? Try these solutions
 npm install electron-packager --save-dev
 
 * for use from cli <br>
-npm install electron-packager -g
+npm install electron-packager -g <br> 
+Deploy using
+* electron-packager <sourcedir> <appname> --platform=win32 --arch=x64
 
 # Electron Console Logging
 You will notice if you try to log something in a js file that it will log in your IDE, not the app, here is the solution to print in the app:

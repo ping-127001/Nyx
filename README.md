@@ -1,6 +1,27 @@
 # Nyx
 Repo for all things related to Nyx, Nyx website, Nyx Electron App
 
+# Code-Style
+* All curly braces should be on it's own line
+```js
+if (true)
+{
+	while (true)
+	{
+		
+	}
+}
+```
+* Instead of this
+```js
+if (true) {
+
+	while (true) {
+	
+	}
+}
+```
+
 # Starting the Serverside for debugging locally
 * cd nyxapp + cd Serverside
 * node index.js (this is only if you have access to the Serverside)

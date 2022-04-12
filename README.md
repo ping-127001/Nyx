@@ -39,3 +39,26 @@ You will notice if you try to log something in a js file that it will log in you
 <br>
 **console.log works, but where it logs to depends on whether you call it from the main process or the renderer process. If you call it from the renderer process (i.e. JavaScript that is included from your index.html file) it will be logged to the dev tools window. If you call it from the main process (i.e. in main.js) it will work the same way as it does in Node - it will log to the terminal window. If you're starting your Electron process from the Terminal using electron . you can see your console.log calls from the main process there.**
 
+## Licensing 
+I believe in open source, so I made this developer friendly, here is the basics of this license
+<br></br>
+Permissions
+* ✔️ Commercial use
+* ✔️ Modification
+* ✔️ Distribution
+* ✔️ Private use
+<br></br>
+
+Conditions
+* ❕ License and copyright notice
+* ❕ State changes
+* ❕ Disclose source
+* ❕ Same license
+<br></br>
+
+Limitations
+* ❌ Liability
+* ❌ Warranty
+<br></br>
+
+License being used is: **GNU General Public License v2.0 license**

@@ -41,7 +41,7 @@ Having issues after installing a module? Try these solutions
 * ws
 * axios
 * request
-* discord-rich-presence
+* discord-rich-presence (requires you to have GIT installed to download the package)
 
 # Electron 
 * [Electron QuickStart](https://www.electronjs.org/docs/v14-x-y/tutorial/quick-start)

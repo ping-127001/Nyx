@@ -39,7 +39,6 @@ function startDiscord()
 {
     isRunning('discord.exe', (status) => 
     {
-        console.log("Status: " + status)
         if (status)
         {
             client.updatePresence

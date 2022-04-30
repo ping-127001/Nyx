@@ -43,7 +43,7 @@ function startDiscord()
         {
             client.updatePresence
             ({
-                state: 'Make friends that last forever!',
+                state: 'Powered by electronjs',
                 details: 'NyxApp',
                 startTimestamp: Date.now(),
                 largeImageKey: 'nyx',

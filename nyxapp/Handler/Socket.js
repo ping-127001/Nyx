@@ -1,21 +1,22 @@
-const ws = require('express-ws');
+const Alert = require("../Handler/Alert.js");
 
-function Send(msg)
+var io = require("socket.io-client");
+
+var socket = io.connect("http://127.0.0.1:8080/");
+
+function Send(name, msg)
 {
     try
     {
-        ws.on('open', function open() 
-        {
-          ws.send(msg);
-        });
+      socket.emit(name, msg);
     }
     catch (ex)
     {
-
+      Alert.show("Error", ex);
     }
 }
 
-module.exports = 
+module.exports =
 {
     Send
 }

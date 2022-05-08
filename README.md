@@ -38,7 +38,7 @@ Having issues after installing a module? Try these solutions
 * Not working? try this: .\node_modules\.bin\electron-rebuild.cmd
 
 # Node_Modules used
-* ws
+* socket.io
 * axios
 * request
 * discord-rich-presence (requires you to have GIT installed to download the package)

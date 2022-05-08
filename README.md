@@ -23,7 +23,7 @@ if (true) {
 ```
 
 # Starting the Serverside for debugging locally
-* cd nyxapp + cd Serverside
+* cd nyxapp\Serverside
 * node server.js (this is only if you have access to the Serverside)
 
 # Debugging Nyx

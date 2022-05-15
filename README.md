@@ -1,5 +1,5 @@
 # Nyx
-Repo for all things related to Nyx, Nyx website, Nyx Electron App
+Repo for all things Nyx Client
 
 # Code-Style
 * All curly braces should be on it's own line

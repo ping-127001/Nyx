@@ -41,6 +41,7 @@ Having issues after installing a module? Try these solutions
 * socket.io
 * axios
 * request
+* ip
 * discord-rich-presence (requires you to have GIT installed to download the package)
 
 # Electron 

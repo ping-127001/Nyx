@@ -1,6 +1,8 @@
 const fs = require("fs");
 
-const roamingDir = `C:${process.env.USER || ""}/AppData/Roaming/NyxData`;
+var os = require('os')
+
+const roamingDir = `C:/Users/${os.userInfo().username}/AppData/Roaming/NyxData`;
 
 function createFolder(dir)
 {
@@ -56,16 +58,16 @@ function createConfigFile(name, extension, data)
                     recursive: true
                 });
     
-            fs.writeFileSync(`/Nyx/${name}.${extension}`, data)
+            fs.writeFileSync(`${roamingDir}/${name}.${extension}`, data)
         }
         else if (fs.existsSync(roamingDir))
         {
-            fs.writeFileSync(`/Nyx/${name}.${extension}`, data)
+            fs.writeFileSync(`${roamingDir}/${name}.${extension}`, data)
         }
     }
     catch (ex)
     {
-        console.log(`There was an error creating a config file ${name}.${extension} in ${dir} \n ${ex}`);
+        console.log(`There was an error creating a config file ${name}.${extension} in ${roamingDir} \n ${ex}`);
     }
 }
 

@@ -42,6 +42,7 @@ Having issues after installing a module? Try these solutions
 * axios
 * request
 * ip
+* bcrypt
 * discord-rich-presence (requires you to have GIT installed to download the package)
 
 # Electron 

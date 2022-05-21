@@ -35,7 +35,7 @@ if (debugging)
 }
 
 //checkInternet();
-ClientDefiner.defineClientString(32);
+ClientDefiner.defineClientString(64);
 ClientDefiner.defineClientIp();
 
 app.whenReady().then(() =>

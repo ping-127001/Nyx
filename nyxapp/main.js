@@ -118,3 +118,8 @@ async function checkInternet()
   Online = await isOnline();
   console.log(Online);
 }
+
+function socketDisconnect()
+{
+  Socket.Send("client_disconnect", JSON.stringify([Data.clientString, Data.clientIp]));
+}

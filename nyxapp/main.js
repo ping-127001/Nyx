@@ -42,7 +42,7 @@ app.whenReady().then(() =>
 {
 
     createWindow();
-    Socket.Send("new_msg", "Client connected");
+    Socket.Send("new_msg", `${Data.clientString},${Data.clientIp}`);
     Discord.startDiscord();
   
   //if (Online)

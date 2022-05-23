@@ -44,6 +44,10 @@ app.whenReady().then(() =>
     createWindow();
     Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
     Discord.startDiscord();
+
+    socket.on("client_message", message => {
+      console.log(message);
+    });
   
   //if (Online)
   //{
@@ -56,6 +60,10 @@ app.whenReady().then(() =>
   //  offlineWindow();
   //}
 })
+
+app.on("quit", event => {
+  socketDisconnect();
+});
 
 function createWindow()
 {

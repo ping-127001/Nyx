@@ -32,6 +32,24 @@ if (true) {
 * npm start
 * Make sure you are using the packages json provided, it has the information required for Electron
 
+# Developing Plugins
+Interested in making Plugins? Follow these steps
+* Create a Javascript file in /Plugins
+* Import this code : 
+```js
+function Start()
+{
+    //execute code
+}
+
+module.exports = 
+{
+    Start
+}
+```
+* To load your Plugin, go to Main.js and use pluginLoader.loadPlugin
+* The paramaters for loadPlugin are your pluginname, and the Path which would be ../Plugins/YourPlugin.js
+
 # Adding a node_module
 Having issues after installing a module? Try these solutions
 * npm install --save-dev electron-rebuild

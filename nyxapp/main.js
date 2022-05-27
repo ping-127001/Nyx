@@ -2,6 +2,8 @@ const { app, BrowserWindow} = require('electron');
 
 const isOnline = require('is-online');
 
+const fs = require('fs');
+
 const Data = require("./Data/AppData.json");
 
 const ClientDefiner = require('./Handler/ClientDefiner.js');
@@ -34,6 +36,9 @@ if (debugging)
   //this gets it to stop logging about not supporting GL or something stupid like that
 }
 
+
+setPluginLocation();
+loadPlugin("example");
 //checkInternet();
 ClientDefiner.defineClientString(64);
 ClientDefiner.defineClientIp();
@@ -44,8 +49,9 @@ app.whenReady().then(() =>
     createWindow();
     Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
     Discord.startDiscord();
-
-    socket.on("client_message", message => {
+    //loadPlugin("example", "./Handler/Plugins/examplePlugin.js");
+    socket.on("client_message", message => 
+    {
       console.log(message);
     });
   
@@ -61,7 +67,8 @@ app.whenReady().then(() =>
   //}
 })
 
-app.on("quit", event => {
+app.on("quit", event => 
+{
   socketDisconnect();
 });
 
@@ -83,7 +90,7 @@ function createWindow()
     }
     catch (ex)
     {
-      Alert.show("Error", ex);
+      //Popup.show("Nyx", "An error occured loading the window. " + ex)
     }
 }
 
@@ -130,4 +137,44 @@ async function checkInternet()
 function socketDisconnect()
 {
   Socket.Send("client_disconnect", JSON.stringify([Data.clientString, Data.clientIp]));
+}
+
+
+
+//ALL PLUGIN SHIT GOES BELOW//
+
+//ok this is really gay, i tried to just rewrite my command handler for my discord bot but i forgot that it uses the discord client and uses their collection// (btw the code i was modifying is from https://github.com/ping-127001/PornValley/blob/main/bot.js)
+//maybe steal the client collection thing from discord.js..? the "client" could be renamed to PluginManager or something like that?//
+function setPluginLocation()
+{
+
+  try
+  {
+    const pluginFiles = fs.readdirSync('./Plugins').filter(file => file.endsWith('.js'));
+    for (const file of pluginFiles)
+    {
+      const plugin = require(`./Plugins/${file}`);
+      plugin.set(plugin.name, plugin);
+    }
+  }
+  catch (ex)
+  {
+    console.log("There was an error setting the plugins location " + ex);
+  }
+}
+
+function loadPlugin(pluginName)
+{
+  try
+  {
+    const plugin = plugin.get(pluginName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(pluginName))
+    if (plugin) 
+    {
+      plugin.get(command.name).execute(message, args, client);
+    }
+  }
+  catch (ex)
+  {
+
+  }
 }

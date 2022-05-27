@@ -1,5 +1,7 @@
 const { app, BrowserWindow} = require('electron');
 
+const { dialog } = require('electron');
+
 const isOnline = require('is-online');
 
 const fs = require('fs');
@@ -15,6 +17,8 @@ const Alert = require("./Handler/Alert.js");
 const Discord = require('./Handler/Discord.js');
 
 const fstream = require('./Handler/fstream.js');
+
+const pluginLoader = require("./Handler/pluginLoader.js");
 
 const Socket = require("./Handler/Socket.js");
 
@@ -36,9 +40,6 @@ if (debugging)
   //this gets it to stop logging about not supporting GL or something stupid like that
 }
 
-
-setPluginLocation();
-loadPlugin("example");
 //checkInternet();
 ClientDefiner.defineClientString(64);
 ClientDefiner.defineClientIp();
@@ -47,24 +48,36 @@ app.whenReady().then(() =>
 {
 
     createWindow();
-    Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
     Discord.startDiscord();
-    //loadPlugin("example", "./Handler/Plugins/examplePlugin.js");
+    Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
     socket.on("client_message", message => 
     {
       console.log(message);
     });
-  
-  //if (Online)
-  //{
-    //createWindow();
-    //Socket.Send("new_msg", "Client connected");
-   // Discord.startDiscord();
-  //}
-  //else if (!Online)
- // {
-  //  offlineWindow();
-  //}
+
+    var options = 
+    {
+      type: 'question',
+      buttons: ['Yes', 'No'],
+      defaultId: 0,
+      title: 'Nyx',
+      message: 'Do you want to load Plugins?',
+    };
+
+    dialog.showMessageBox(null, options).then( (data) => 
+    {
+       if (data.response = "0")
+       {
+         try
+         {
+          pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
+         }
+         catch (ex)
+         {
+           Popup.show("There was an error loading plugins. Your plugins will not be loaded Error: " + ex);
+         }
+       }
+    });
 })
 
 app.on("quit", event => 
@@ -139,42 +152,7 @@ function socketDisconnect()
   Socket.Send("client_disconnect", JSON.stringify([Data.clientString, Data.clientIp]));
 }
 
-
-
-//ALL PLUGIN SHIT GOES BELOW//
-
-//ok this is really gay, i tried to just rewrite my command handler for my discord bot but i forgot that it uses the discord client and uses their collection// (btw the code i was modifying is from https://github.com/ping-127001/PornValley/blob/main/bot.js)
-//maybe steal the client collection thing from discord.js..? the "client" could be renamed to PluginManager or something like that?//
 function setPluginLocation()
 {
 
-  try
-  {
-    const pluginFiles = fs.readdirSync('./Plugins').filter(file => file.endsWith('.js'));
-    for (const file of pluginFiles)
-    {
-      const plugin = require(`./Plugins/${file}`);
-      plugin.set(plugin.name, plugin);
-    }
-  }
-  catch (ex)
-  {
-    console.log("There was an error setting the plugins location " + ex);
-  }
-}
-
-function loadPlugin(pluginName)
-{
-  try
-  {
-    const plugin = plugin.get(pluginName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(pluginName))
-    if (plugin) 
-    {
-      plugin.get(command.name).execute(message, args, client);
-    }
-  }
-  catch (ex)
-  {
-
-  }
 }

@@ -32,7 +32,7 @@ var socket = io.connect("http://127.0.0.1:8080/");
 
 var Online;
 
-var debugging = false
+var debugging = true
 
 if (debugging)
 {
@@ -40,7 +40,6 @@ if (debugging)
   //this gets it to stop logging about not supporting GL or something stupid like that
 }
 
-//checkInternet();
 ClientDefiner.defineClientString(64);
 ClientDefiner.defineClientIp();
 
@@ -49,36 +48,13 @@ app.whenReady().then(() =>
 
     createWindow();
     Discord.startDiscord();
+    checkPlugins();
     Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
     socket.on("client_message", message => 
     {
       console.log(message);
     });
-
-    var options = 
-    {
-      type: 'question',
-      buttons: ['Yes', 'No'],
-      defaultId: 0,
-      title: 'Nyx',
-      message: 'Do you want to load Plugins?',
-    };
-
-    dialog.showMessageBox(null, options).then( (data) => 
-    {
-       if (data.response = "0")
-       {
-         try
-         {
-          pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
-         }
-         catch (ex)
-         {
-           Popup.show("There was an error loading plugins. Your plugins will not be loaded Error: " + ex);
-         }
-       }
-    });
-})
+});
 
 app.on("quit", event => 
 {
@@ -152,7 +128,30 @@ function socketDisconnect()
   Socket.Send("client_disconnect", JSON.stringify([Data.clientString, Data.clientIp]));
 }
 
-function setPluginLocation()
+function checkPlugins()
 {
-
+  var options = 
+  {
+    type: 'question',
+    buttons: ['Yes', 'No'],
+    defaultId: 0,
+    title: 'Nyx',
+    message: 'Do you want to load Plugins?',
+  };
+  
+  dialog.showMessageBox(null, options).then( (data) => 
+  {
+    if (data.response = "0")
+    {
+      try
+      {
+        pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
+        Popup.show("Nyx", "Succuessfully loaded all plugins");
+      }
+      catch (ex)
+      {
+        Alert.show("Nyx", "There was an error loading plugins. Your plugins will not be loaded Error: " + ex)
+      }
+    }
+  })
 }

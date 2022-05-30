@@ -140,17 +140,21 @@ function checkPlugins()
   
   dialog.showMessageBox(null, options).then( (data) => 
   {
-    try
-    {
-      if (data.response = 0)
+      if (data.response == 0)
       {
-        pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
-        Popup.show("Nyx", "Succuessfully loaded all plugins");
+        try
+        {
+          pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
+          Popup.show("Nyx", "Succuessfully loaded all plugins");
+        }
+        catch (ex)
+        {
+          Alert.show("Nyx", "There was an error loading plugins. Your plugins will not be loaded Error: " + ex)
+        }
       }
-    }
-    catch (ex)
-    {
-      Alert.show("Nyx", "There was an error loading plugins. Your plugins will not be loaded Error: " + ex)
-    }
-  })
+      else
+      {
+        return;
+      }
+    })
 }

@@ -1,4 +1,4 @@
-const client = require("discord-rich-presence")("962483669119930370");
+const client = require("discord-rich-presence")("980627232273874964");
 
 
 const package = require("../package.json");

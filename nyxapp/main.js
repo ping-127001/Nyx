@@ -1,3 +1,5 @@
+const package = require("./package.json");
+
 const { app, BrowserWindow} = require('electron');
 
 const { dialog } = require('electron');
@@ -58,6 +60,7 @@ app.whenReady().then(() =>
 app.on("quit", event => 
 {
   socketDisconnect();
+  Discord.Disconnect();
 });
 
 function createWindow()
@@ -146,6 +149,7 @@ function checkPlugins()
         {
           pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
           Popup.show("Nyx", "Succuessfully loaded all plugins");
+          Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
         }
         catch (ex)
         {
@@ -154,6 +158,7 @@ function checkPlugins()
       }
       else
       {
+        Discord.Update(`NyxApp ${package.version}`, "Plugins disabled")
         return;
       }
     })

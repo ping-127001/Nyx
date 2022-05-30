@@ -12,7 +12,7 @@ const Data = require("./Data/AppData.json");
 
 const ClientDefiner = require('./Handler/ClientDefiner.js');
 
-const Popup = require("./Handler/Popup.js");
+const Notification = require("./Handler/Notification.js");
 
 const Alert = require("./Handler/Alert.js");
 
@@ -81,7 +81,7 @@ function createWindow()
     }
     catch (ex)
     {
-      //Popup.show("Nyx", "An error occured loading the window. " + ex)
+      //Notification.show("Nyx", "An error occured loading the window. " + ex)
     }
 }
 
@@ -148,7 +148,7 @@ function checkPlugins()
         try
         {
           pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
-          Popup.show("Nyx", "Succuessfully loaded all plugins");
+          Notification.show("Nyx", "Succuessfully loaded all plugins");
           Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
         }
         catch (ex)

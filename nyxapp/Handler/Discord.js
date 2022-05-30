@@ -1,6 +1,8 @@
 const client = require("discord-rich-presence")("962483669119930370");
 
 
+const package = require("../package.json");
+
 const exec = require('child_process').exec;
 
 const electron = require('electron');
@@ -44,8 +46,7 @@ function startDiscord()
             client.updatePresence
             ({
                 state: 'Powered by electronjs',
-                details: 'NyxApp',
-                startTimestamp: Date.now(),
+                details: `NyxApp ${package.version}`,
                 largeImageKey: 'nyx',
                 largeImageText: "https://github.com/ping-127001/Nyx",
                 instance: true,
@@ -58,9 +59,38 @@ function startDiscord()
     })
 }
 
+function Update(details, state)
+{
+    isRunning('discord.exe', (status) => 
+    {
+        if (status)
+        {
+            client.updatePresence
+            ({
+                state: state,
+                details: details,
+                largeImageKey: 'nyx',
+                largeImageText: "https://github.com/ping-127001/Nyx",
+                instance: true,
+              });
+        }
+        if (!status)
+        {
+            //client.disconnect();
+        }
+    })
+}
+
+function Disconnect()
+{
+    client.disconnect();
+}
+
 
 module.exports =
 {
     isRunning,
-    startDiscord
+    startDiscord,
+    Update,
+    Disconnect
 }

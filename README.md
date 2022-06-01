@@ -48,7 +48,10 @@ module.exports =
 }
 ```
 * To load your Plugin, go to Main.js and use pluginLoader.loadPlugin
-* The paramaters for loadPlugin are your pluginname, and the Path which would be ../Plugins/YourPlugin.js
+* The paramaters for loadPlugin are your pluginname, and the Path which would be ../Plugins/YourPlugin.js and also data, you can now pass data to your Plugin example:
+```js
+pluginLoader.loadPlugin("example", "../Plugins/example.js", "parameter here");
+```
 
 # Adding a node_module
 Having issues after installing a module? Try these solutions

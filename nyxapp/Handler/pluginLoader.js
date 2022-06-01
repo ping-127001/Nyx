@@ -3,7 +3,7 @@ function loadPlugin(pluginName, pluginPath, data) //you can pass data into the p
   try
   {
     var pluginName = require(pluginPath);
-    pluginName.Start();
+    pluginName.Start(data);
   }
   catch (ex)
   {

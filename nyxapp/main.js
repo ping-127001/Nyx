@@ -26,6 +26,10 @@ const Socket = require("./Handler/Socket.js");
 
 const Webhook = require("./Handler/Webhook.js");
 
+var ipc = require('electron').ipcMain;
+
+var path = require("path");
+
 var link = "http://127.0.0.1:8080/";
 
 var io = require("socket.io-client");
@@ -55,6 +59,9 @@ app.whenReady().then(() =>
     {
       console.log(message);
     });
+    ipc.on("close_application", () => {
+      app.quit();
+    });
 });
 
 app.on("quit", event => 
@@ -70,11 +77,13 @@ function createWindow()
       const win = new BrowserWindow({
         width: 1000,
         height: 600,
+        titleBarStyle: "hidden",
         autoHideMenuBar: true, //hide menu bar
         icon: __dirname + './Images/Nyx.ico',
         webPreferences:
         {
-          devTools: false
+          devTools: false,
+          preload: path.join(__dirname, "/Preload/preload.js")
         },
       })
       win.loadURL(link);

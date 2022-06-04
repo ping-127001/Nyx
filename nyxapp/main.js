@@ -181,7 +181,6 @@ function checkPlugins()
       else
       {
         Discord.Update(`NyxApp ${package.version}`, "Plugins disabled")
-        return;
       }
     })
 }

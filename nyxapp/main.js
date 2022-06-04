@@ -1,6 +1,6 @@
 const package = require("./package.json");
 
-const { app, BrowserWindow} = require('electron');
+const { app, BrowserWindow, remote } = require('electron');
 
 const { dialog } = require('electron');
 
@@ -60,7 +60,19 @@ app.whenReady().then(() =>
       console.log(message);
     });
     ipc.on("close_application", () => {
-      app.quit();
+      var window = BrowserWindow.getFocusedWindow();
+      
+      window.close();
+    });
+    ipc.on("maximize_application", () => {
+      var window = BrowserWindow.getFocusedWindow();
+      
+      window.maximize();
+    });
+    ipc.on("minimize_application", () => {
+      var window = BrowserWindow.getFocusedWindow();
+      
+      window.minimize();
     });
 });
 

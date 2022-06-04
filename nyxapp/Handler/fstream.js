@@ -4,6 +4,8 @@ var os = require('os')
 
 const roamingDir = `C:/Users/${os.userInfo().username}/AppData/Roaming/NyxData`;
 
+var folderExists = false;
+
 function createFolder(dir)
 {
     try
@@ -15,7 +17,6 @@ function createFolder(dir)
                     recursive: true
                 });
         }
-        else return;
     }
     catch (ex)
     {
@@ -71,9 +72,23 @@ function createConfigFile(name, extension, data)
     }
 }
 
+function checkFolderExists(dir)
+{
+    if (fs.existsSync(dir))
+    {
+        folderExists = true;
+    }
+    if (!fs.existsSync(dir))
+    {
+        folderExists = false;
+    }
+}
+
 module.exports =
 {
     createFolder,
     createFile,
-    createConfigFile
+    createConfigFile,
+    checkFolderExists,
+    folderExists,
 }

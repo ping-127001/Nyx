@@ -78,6 +78,7 @@ function createWindow()
         width: 1000,
         height: 600,
         titleBarStyle: "hidden",
+        frame: false,
         autoHideMenuBar: true, //hide menu bar
         icon: __dirname + './Images/Nyx.ico',
         webPreferences:

@@ -172,7 +172,6 @@ function checkErrorLog()
       if (data.response == 0)
       {
         fstream.logging = true;
-        fstream.logError("error", ".log", "balls error test pls work");
       }
       else
       {

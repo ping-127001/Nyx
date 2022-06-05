@@ -59,10 +59,8 @@ app.whenReady().then(() =>
     {
       console.log(message);
     });
-    ipc.on("close_application", () => {
-      var window = BrowserWindow.getFocusedWindow();
-      
-      window.close();
+    ipc.on("close_application", () => { 
+      app.quit();
     });
     ipc.on("maximize_application", () => {
       var window = BrowserWindow.getFocusedWindow();

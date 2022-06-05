@@ -80,17 +80,16 @@ function logError(name, extension, error)
     try
     {
         var date = new Date().toISOString().slice(0, 10);
-        if (logging)
+        if (logging = true)
         {
-            if (fs.existsSync(roamingDir))
-            {
-                fs.writeFileSync(`${roamingDir}/${name}.${extension}`, `${date} Error: ${error}`);
-            }
             if (!fs.existsSync(roamingDir))
             {
-                fs.writeFile(roamingDir);
-                fs.writeFileSync(`${roamingDir}/${name}.${extension}`, `${date} Error: ${error}`);
+                fs.mkdirSync(roamingDir, 
+                    {
+                        recursive: true
+                    });
             }
+            fs.writeFileSync(`${roamingDir}/${name}.${extension}`, `${date} ` + `Error: ${error}`);
         }
     }
     catch (ex)

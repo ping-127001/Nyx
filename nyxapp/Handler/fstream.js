@@ -75,7 +75,7 @@ function createConfigFile(name, extension, data)
     }
 }
 
-function logError(name, extension, error)
+function logError(error)
 {
     try
     {
@@ -89,7 +89,7 @@ function logError(name, extension, error)
                         recursive: true
                     });
             }
-            fs.writeFileSync(`${roamingDir}/${name}.${extension}`, `${date} ` + `Error: ${error}`);
+            fs.writeFileSync(`${roamingDir}/error.log`, `${date} ` + `Error: ${error}`);
         }
     }
     catch (ex)

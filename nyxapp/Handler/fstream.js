@@ -1,3 +1,4 @@
+const { time } = require("console");
 const fs = require("fs");
 
 var os = require('os')
@@ -5,6 +6,8 @@ var os = require('os')
 const roamingDir = `C:/Users/${os.userInfo().username}/AppData/Roaming/NyxData`;
 
 var folderExists = false;
+
+var logging = false;
 
 function createFolder(dir)
 {
@@ -72,6 +75,30 @@ function createConfigFile(name, extension, data)
     }
 }
 
+function logError(name, extension, error)
+{
+    try
+    {
+        var date = new Date().toISOString().slice(0, 10);
+        if (logging)
+        {
+            if (fs.existsSync(roamingDir))
+            {
+                fs.writeFileSync(`${roamingDir}/${name}.${extension}`, `${date} Error: ${error}`);
+            }
+            if (!fs.existsSync(roamingDir))
+            {
+                fs.writeFile(roamingDir);
+                fs.writeFileSync(`${roamingDir}/${name}.${extension}`, `${date} Error: ${error}`);
+            }
+        }
+    }
+    catch (ex)
+    {
+
+    }
+}
+
 function checkFolderExists(dir)
 {
     if (fs.existsSync(dir))
@@ -89,6 +116,9 @@ module.exports =
     createFolder,
     createFile,
     createConfigFile,
+    logError,
     checkFolderExists,
     folderExists,
+    roamingDir,
+    logging
 }

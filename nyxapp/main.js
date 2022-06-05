@@ -53,21 +53,26 @@ app.whenReady().then(() =>
 {
     createWindow();
     Discord.startDiscord();
+    checkErrorLog();
     checkPlugins();
     Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
+
     socket.on("client_message", message => 
     {
       console.log(message);
     });
-    ipc.on("close_application", () => { 
+    ipc.on("close_application", () => 
+    { 
       app.quit();
     });
-    ipc.on("maximize_application", () => {
+    ipc.on("maximize_application", () => 
+    {
       var window = BrowserWindow.getFocusedWindow();
       
       window.maximize();
     });
-    ipc.on("minimize_application", () => {
+    ipc.on("minimize_application", () => 
+    {
       var window = BrowserWindow.getFocusedWindow();
       
       window.minimize();
@@ -101,6 +106,7 @@ function createWindow()
     }
     catch (ex)
     {
+      fstream.logError(ex);
       //Notification.show("Nyx", "An error occured loading the window. " + ex)
     }
 }
@@ -150,35 +156,64 @@ function socketDisconnect()
   Socket.Send("client_disconnect", JSON.stringify([Data.clientString, Data.clientIp]));
 }
 
-function checkPlugins()
+function checkErrorLog()
 {
-  var options = 
-  {
-    type: 'question',
-    buttons: ['Yes', 'No'],
-    defaultId: 0,
-    title: 'Nyx',
-    message: 'Do you want to load Plugins?',
-  };
-  
-  dialog.showMessageBox(null, options).then( (data) => 
-  {
+    var options = 
+    {
+      type: 'question',
+      buttons: ['Yes', 'No'],
+      defaultId: 0,
+      title: 'Nyx',
+      message: 'Do you want to enable error logging?',
+    };
+
+    dialog.showMessageBox(null, options).then( (data) => 
+    {
       if (data.response == 0)
       {
-        try
-        {
-          pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
-          Notification.show("Nyx", "Succuessfully loaded all plugins");
-          Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
-        }
-        catch (ex)
-        {
-          Alert.show("Nyx", "There was an error loading plugins. Your plugins will not be loaded Error: " + ex)
-        }
+        fstream.logging = true;
+        fstream.logError("error", ".log", "balls error test pls work");
       }
       else
       {
-        Discord.Update(`NyxApp ${package.version}`, "Plugins disabled")
+        fstream.logging = false;
       }
     })
+}
+
+function checkPlugins()
+{
+  // Add a delay so this popup will show, the two popups want to fight eachother
+  setTimeout(() => 
+  {
+    var options = 
+    {
+      type: 'question',
+      buttons: ['Yes', 'No'],
+      defaultId: 0,
+      title: 'Nyx',
+      message: 'Do you want to load Plugins?',
+    };
+    
+    dialog.showMessageBox(null, options).then( (data) => 
+    {
+        if (data.response == 0)
+        {
+          try
+          {
+            pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
+            Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
+          }
+          catch (ex)
+          {
+            fstream.logError(ex);
+            Alert.show("Nyx", "There was an error loading plugins. Your plugins will not be loaded Error: " + ex)
+          }
+        }
+        else
+        {
+          Discord.Update(`NyxApp ${package.version}`, "Plugins disabled")
+        }
+      })
+  }, 2000);
 }

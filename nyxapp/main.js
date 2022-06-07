@@ -90,8 +90,8 @@ function createWindow()
     try
     {
       const win = new BrowserWindow({
-        width: 1000,
-        height: 600,
+        width: 1100,
+        height: 790,
         titleBarStyle: "hidden",
         frame: false,
         autoHideMenuBar: true, //hide menu bar

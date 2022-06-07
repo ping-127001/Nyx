@@ -1,5 +1,5 @@
 # Nyx
-Repo for all things related to Nyx Client
+Repo things related to the Nyx Client
 
 # Code-Style
 * All curly braces should be on it's own line
@@ -22,12 +22,8 @@ if (true) {
 }
 ```
 
-# Starting the Serverside for debugging locally
-* cd nyxapp\Serverside
-* node server.js (this is only if you have access to the Serverside)
-
 # Debugging Nyx
-* Make sure you are in the nyxapp directory, NOT \Nyx. cd nyxapp!
+* Make sure you are in the nyxapp directory, NOT \Nyx
 * Install electron: npm install --save-dev electron
 * npm start
 * Make sure you are using the packages json provided, it has the information required for Electron

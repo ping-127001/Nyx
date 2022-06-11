@@ -1,5 +1,5 @@
 # Nyx
-Repo things related to the Nyx Client
+Repo for things related to the Nyx Client
 
 # Code-Style
 * All curly braces should be on it's own line

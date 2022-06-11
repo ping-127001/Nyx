@@ -1,5 +1,6 @@
 const { time } = require("console");
 const fs = require("fs");
+const cfg = require('home-config').load('.myapprc')
 
 var os = require('os')
 
@@ -9,82 +10,95 @@ var folderExists = false;
 
 var logging = false;
 
-function createFolder(dir)
+function createFolder(dir) 
 {
-    try
+    try 
     {
         if (!fs.existsSync(dir)) 
         {
-            fs.mkdirSync(dir, 
+            fs.mkdirSync(dir,
                 {
                     recursive: true
                 });
         }
     }
-    catch (ex)
+    catch (ex) 
     {
         console.log(`There was an error creating a folder in ${dir} \n ${ex}`);
     }
 }
 
-function createFile(dir, name, extension, data)
-{
-    try
-    {
-        if (!fs.existsSync(dir))
-        {
-            fs.mkdirSync(dir, 
+function createFile(dir, name, extension, data) {
+    try {
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir,
                 {
                     recursive: true
                 });
 
             fs.writeFileSync(`${dir}/${name}.${extension}`, data);
         }
-        else if (fs.existsSync(dir))
-        {
+        else if (fs.existsSync(dir)) {
             fs.writeFileSync(`${dir}/${name}.${extension}`, data);
         }
     }
-    catch (ex)
+    catch (ex) 
     {
         console.log(`There was an error creating ${name}.${extension} in ${dir} \n ${ex}`);
     }
 }
 
-function createConfigFile(name, extension, data)
-{
-    try
+function createConfigFile(name, extension, data) {
+    try 
     {
-        if (!fs.existsSync(roamingDir))
+        if (process.platform === "linux") 
         {
-            fs.mkdirSync(roamingDir, 
+            const home = process.env.HOME;
+            var linuxRoaming = `${home}/.NyxApp`;
+            fs.mkdirSync(linuxRoaming,
                 {
                     recursive: true
                 });
-    
-            fs.writeFileSync(`${roamingDir}/${name}.${extension}`, data)
+            fs.writeFileSync(`${linuxRoaming}/${name}${extension}`, data);
         }
-        else if (fs.existsSync(roamingDir))
+
+        if (process.platform === "win32") 
         {
-            fs.writeFileSync(`${roamingDir}/${name}.${extension}`, data)
+            if (!fs.existsSync(roamingDir)) 
+            {
+                fs.mkdirSync(roamingDir,
+                    {
+                        recursive: true
+                    });
+
+                fs.writeFileSync(`${roamingDir}/${name}${extension}`, data);
+            }
+            else if (fs.existsSync(roamingDir)) {
+                fs.writeFileSync(`${roamingDir}/${name}${extension}`, data);
+            }
         }
     }
-    catch (ex)
+    catch (ex) 
     {
-        console.log(`There was an error creating a config file ${name}.${extension} in ${roamingDir} \n ${ex}`);
+        if (process.platform === "win32") 
+        {
+            console.log(`There was an error creating a config file ${name}${extension} in ${roamingDir} \n ${ex}`);
+        }
+        if (process.platform === "linux") 
+        {
+            console.log(`There was an error creating a config file ${name}${extension} in ${linuxRoaming} \n ${ex}`);
+        }
     }
+    //console.log(process.env.HOME)
 }
 
-function logError(error)
+function logError(error) 
 {
-    try
-    {
+    try {
         var date = new Date().toISOString().slice(0, 10);
-        if (logging = true)
-        {
-            if (!fs.existsSync(roamingDir))
-            {
-                fs.mkdirSync(roamingDir, 
+        if (logging = true) {
+            if (!fs.existsSync(roamingDir)) {
+                fs.mkdirSync(roamingDir,
                     {
                         recursive: true
                     });
@@ -92,19 +106,19 @@ function logError(error)
             fs.writeFileSync(`${roamingDir}/error.log`, `${date} ` + `Error: ${error}`);
         }
     }
-    catch (ex)
+    catch (ex) 
     {
 
     }
 }
 
-function checkFolderExists(dir)
+function checkFolderExists(dir) 
 {
-    if (fs.existsSync(dir))
+    if (fs.existsSync(dir)) 
     {
         folderExists = true;
     }
-    if (!fs.existsSync(dir))
+    if (!fs.existsSync(dir)) 
     {
         folderExists = false;
     }

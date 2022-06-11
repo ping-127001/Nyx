@@ -10,16 +10,20 @@ var folderExists = false;
 
 var logging = false;
 
-function createFolder(dir) {
-    try {
-        if (!fs.existsSync(dir)) {
+function createFolder(dir) 
+{
+    try 
+    {
+        if (!fs.existsSync(dir)) 
+        {
             fs.mkdirSync(dir,
                 {
                     recursive: true
                 });
         }
     }
-    catch (ex) {
+    catch (ex) 
+    {
         console.log(`There was an error creating a folder in ${dir} \n ${ex}`);
     }
 }
@@ -38,14 +42,17 @@ function createFile(dir, name, extension, data) {
             fs.writeFileSync(`${dir}/${name}.${extension}`, data);
         }
     }
-    catch (ex) {
+    catch (ex) 
+    {
         console.log(`There was an error creating ${name}.${extension} in ${dir} \n ${ex}`);
     }
 }
 
 function createConfigFile(name, extension, data) {
-    try {
-        if (process.platform === "linux") {
+    try 
+    {
+        if (process.platform === "linux") 
+        {
             const home = process.env.HOME;
             var linuxRoaming = `${home}/.NyxApp`;
             fs.mkdirSync(linuxRoaming,
@@ -55,8 +62,10 @@ function createConfigFile(name, extension, data) {
             fs.writeFileSync(`${linuxRoaming}/${name}${extension}`, data);
         }
 
-        if (process.platform === "win32") {
-            if (!fs.existsSync(roamingDir)) {
+        if (process.platform === "win32") 
+        {
+            if (!fs.existsSync(roamingDir)) 
+            {
                 fs.mkdirSync(roamingDir,
                     {
                         recursive: true
@@ -69,18 +78,22 @@ function createConfigFile(name, extension, data) {
             }
         }
     }
-    catch (ex) {
-        if (process.platform === "win32") {
+    catch (ex) 
+    {
+        if (process.platform === "win32") 
+        {
             console.log(`There was an error creating a config file ${name}${extension} in ${roamingDir} \n ${ex}`);
         }
-        if (process.platform === "linux") {
+        if (process.platform === "linux") 
+        {
             console.log(`There was an error creating a config file ${name}${extension} in ${linuxRoaming} \n ${ex}`);
         }
     }
     //console.log(process.env.HOME)
 }
 
-function logError(error) {
+function logError(error) 
+{
     try {
         var date = new Date().toISOString().slice(0, 10);
         if (logging = true) {
@@ -93,16 +106,20 @@ function logError(error) {
             fs.writeFileSync(`${roamingDir}/error.log`, `${date} ` + `Error: ${error}`);
         }
     }
-    catch (ex) {
+    catch (ex) 
+    {
 
     }
 }
 
-function checkFolderExists(dir) {
-    if (fs.existsSync(dir)) {
+function checkFolderExists(dir) 
+{
+    if (fs.existsSync(dir)) 
+    {
         folderExists = true;
     }
-    if (!fs.existsSync(dir)) {
+    if (!fs.existsSync(dir)) 
+    {
         folderExists = false;
     }
 }

@@ -51,32 +51,46 @@ ClientDefiner.defineClientIp();
 
 app.whenReady().then(() =>
 {
-    createWindow();
-    Discord.startDiscord();
-    checkErrorLog();
-    checkPlugins();
-    Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
-
-    socket.on("client_message", message => 
+    checkInternet();
+    //Wait for the variable to get updated
+    setTimeout(() => 
     {
-      console.log(message);
-    });
-    ipc.on("close_application", () => 
-    { 
-      app.quit();
-    });
-    ipc.on("maximize_application", () => 
-    {
-      var window = BrowserWindow.getFocusedWindow();
+      if (Online == true)
+      {
+        createWindow();
+        Discord.startDiscord();
+        checkErrorLog();
+        fstream.logError("balls");
+        checkPlugins();
+        Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
+    
+        socket.on("client_message", message => 
+        {
+          console.log(message);
+        });
+        ipc.on("close_application", () => 
+        { 
+          app.quit();
+        });
+        ipc.on("maximize_application", () => 
+        {
+          var window = BrowserWindow.getFocusedWindow();
+          
+          window.maximize();
+        });
+        ipc.on("minimize_application", () => 
+        {
+          var window = BrowserWindow.getFocusedWindow();
+          
+          window.minimize();
+        });
+      }
       
-      window.maximize();
-    });
-    ipc.on("minimize_application", () => 
-    {
-      var window = BrowserWindow.getFocusedWindow();
-      
-      window.minimize();
-    });
+      else if (Online == false)
+      {
+        offlineWindow();
+      }
+    }, 200);
 });
 
 app.on("quit", event => 
@@ -131,18 +145,6 @@ function offlineWindow()
   {
     Alert.show("Error", ex);
   }
-}
-
-function recieveWebHooks()
-{
-  io.on("connection", (socket) =>
-  {
-    socket.on("new_msg", (data) => 
-    {
-      console.log(data);
-      Webhook.error = data;
-   });
-  });
 }
 
 async function checkInternet()
@@ -200,7 +202,6 @@ function checkPlugins()
         {
           try
           {
-            pluginLoader.loadPlugin("example", "../Plugins/examplePlugin.js");
             Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
           }
           catch (ex)

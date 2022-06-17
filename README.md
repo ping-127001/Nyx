@@ -11,6 +11,12 @@ if (true)
 		
 	}
 }
+
+switch (var)
+{
+  case true:
+   return;
+}
 ```
 * Instead of this
 ```js
@@ -19,6 +25,11 @@ if (true) {
 	while (true) {
 	
 	}
+}
+
+switch (var) {
+  case true:
+   return;
 }
 ```
 

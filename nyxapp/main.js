@@ -40,10 +40,10 @@ var Online;
 
 var debugging = true
 
-if (debugging)
+
+if (debugging) //you have survived the if statement cleansing, since you are just one lonely if statement. but do not test me, or you shall be eradicated.
 {
-  app.disableHardwareAcceleration();
-  //this gets it to stop logging about not supporting GL or something stupid like that
+  app.disableHardwareAcceleration(); //this gets it to stop logging about not supporting GL or something stupid like that
 }
 
 ClientDefiner.defineClientString(64);
@@ -55,40 +55,41 @@ app.whenReady().then(() =>
     //Wait for the variable to get updated
     setTimeout(() => 
     {
-      if (Online == true)
+      switch (Online)
       {
-        createWindow();
-        Discord.startDiscord();
-        checkErrorLog();
-        fstream.logError("balls");
-        checkPlugins();
-        Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
-    
-        socket.on("client_message", message => 
-        {
-          console.log(message);
-        });
-        ipc.on("close_application", () => 
-        { 
-          app.quit();
-        });
-        ipc.on("maximize_application", () => 
-        {
-          var window = BrowserWindow.getFocusedWindow();
-          
-          window.maximize();
-        });
-        ipc.on("minimize_application", () => 
-        {
-          var window = BrowserWindow.getFocusedWindow();
-          
-          window.minimize();
-        });
-      }
+        case true:
+          createWindow();
+          Discord.startDiscord();
+          checkErrorLog();
+          fstream.logError("balls");
+          checkPlugins();
+          Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
       
-      else if (Online == false)
-      {
-        offlineWindow();
+          socket.on("client_message", message => 
+          {
+            console.log(message);
+          });
+          ipc.on("close_application", () => 
+          { 
+            app.quit();
+          });
+          ipc.on("maximize_application", () => 
+          {
+            var window = BrowserWindow.getFocusedWindow();
+            
+            window.maximize();
+          });
+          ipc.on("minimize_application", () => 
+          {
+            var window = BrowserWindow.getFocusedWindow();
+            
+            window.minimize();
+          });
+          return;
+
+        case false:
+          offlineWindow();
+          return;
       }
     }, 200);
 });
@@ -171,13 +172,15 @@ function checkErrorLog()
 
     dialog.showMessageBox(null, options).then( (data) => 
     {
-      if (data.response == 0)
+      switch (data.response)
       {
-        fstream.logging = true;
-      }
-      else
-      {
-        fstream.logging = false;
+        case 0:
+          fstream.logging = true;
+          return;
+
+        case 1:
+          fstream.logging = false;
+          return;
       }
     })
 }
@@ -198,22 +201,26 @@ function checkPlugins()
     
     dialog.showMessageBox(null, options).then( (data) => 
     {
-        if (data.response == 0)
-        {
+      switch (data.response)
+      {
+        case 0:
           try
           {
             Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
+            return;
           }
           catch (ex)
           {
             fstream.logError(ex);
             Alert.show("Nyx", "There was an error loading plugins. Your plugins will not be loaded Error: " + ex)
           }
-        }
-        else
-        {
-          Discord.Update(`NyxApp ${package.version}`, "Plugins disabled")
-        }
+
+          case 1:
+            {
+              Discord.Update(`NyxApp ${package.version}`, "Plugins disabled")
+              return;
+            }
+      }
       })
   }, 2000);
 }

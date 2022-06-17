@@ -33,6 +33,9 @@ switch (var) {
 }
 ```
 
+* Switch statements
+If you are writing more then one if statement, try to use a switch statement to help perfomance as Javascript is sort of slow. If you are not very good at switch statements thats alright, a developer will rewrite it for you and then merge the code
+
 # Debugging Nyx
 * Make sure you are in the nyxapp directory, NOT \Nyx
 * Install electron: npm install --save-dev electron

@@ -20,4 +20,4 @@ Program is AS IS but is being maintained
 ------------------------------------------------------
 
 ## Reporting a vulnerability
-Join our [Discord server](https://discord.gg/8XxJrFtQPS) to report a vulnerability
+Join our [Discord server](https://discord.gg/8XxJrFtQPS) to report a vulnerability OR make a [Issue](https://github.com/ping-127001/Nyx/issues)

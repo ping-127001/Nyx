@@ -84,13 +84,8 @@ Having issues after installing a module? Try these solutions
 * [Electron QuickStart](https://www.electronjs.org/docs/v14-x-y/tutorial/quick-start)
 
 # Compile Nyx
-* for use in npm scripts <br>
-npm install electron-packager --save-dev
-
-* for use from cli <br>
-npm install electron-packager -g <br> 
-Deploy using
-* electron-packager C:\{sourcedirectoryhere} --platform=win32
+* npm install electron-packager
+* npx electron-packager <sourceDirectory> Nyx --platform=win32
 
 # Electron Console Logging
 You will notice if you try to log something in a js file that it will log in your IDE, not the app, here is the solution to print in the app:

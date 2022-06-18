@@ -1,4 +1,4 @@
-const { time } = require("console");
+const { time, dir } = require("console");
 
 const fs = require("fs");
 
@@ -8,18 +8,18 @@ const roamingDir = `C:/Users/${os.userInfo().username}/AppData/Roaming/NyxData`;
 
 var folderExists = false;
 
-var logging = false;
-
-function createFolder(dir)
+function createFolder(dir)  //this also gets used to make sure the folder exists, used in alot of the functions below
 {
     try
     {
-        if (!fs.existsSync(dir)) 
+        switch (fs.existsSync(dir))
         {
-            fs.mkdirSync(dir, 
-                {
-                    recursive: true
-                });
+            case false:
+                fs.mkdirSync(dir, 
+                    {
+                        recursive: true
+                    });
+                return;
         }
     }
     catch (ex)
@@ -32,18 +32,17 @@ function createFile(dir, name, extension, data)
 {
     try
     {
-        if (!fs.existsSync(dir))
+        switch (fs.existsSync(dir))
         {
-            fs.mkdirSync(dir, 
-                {
-                    recursive: true
-                });
-
-            fs.writeFileSync(`${dir}/${name}.${extension}`, data);
-        }
-        else if (fs.existsSync(dir))
-        {
-            fs.writeFileSync(`${dir}/${name}.${extension}`, data);
+            
+            case false:
+                fs.mkdirSync(dir, 
+                    {
+                        recursive: true
+                    });
+    
+                fs.writeFileSync(`${dir}/${name}.${extension}`, data);
+                return;
         }
     }
     catch (ex)
@@ -56,32 +55,19 @@ function createConfigFile(name, extension, data)
 {
     try
     {
-        if (process.platform === "linux") 
-        {
-            const home = process.env.HOME;
-            var linuxRoaming = `${home}/.NyxData`;
-            fs.mkdirSync(linuxRoaming,
-                {
-                    recursive: true
-                });
-            fs.writeFileSync(`${linuxRoaming}/${name}.${extension}`, data);
-        }
 
-        if (process.platform === "win32")
+        switch (process.platform)
         {
-            if (!fs.existsSync(roamingDir))
-            {
-                fs.mkdirSync(roamingDir, 
-                    {
-                        recursive: true
-                    });
-        
+            case "linux":
+                const home = process.env.HOME;
+                var linuxRoaming = `${home}/.NyxData`;
+                createFolder(linuxRoaming);
+                fs.writeFileSync(`${linuxRoaming}/${name}.${extension}`, data);
+                return;
+
+            case "win32":
+                createFolder(roamingDir);
                 fs.writeFileSync(`${roamingDir}/${name}.${extension}`, data);
-            }
-            else if (fs.existsSync(roamingDir))
-            {
-                fs.writeFileSync(`${roamingDir}/${name}.${extension}`, data);
-            }
         }
     }
     catch (ex)
@@ -94,55 +80,41 @@ function logError(error)
 {
     try
     {
-        if (process.platform === "linux") 
+        switch (process.platform)
         {
-            const home = process.env.HOME;
-            var linuxRoaming = `${home}/.NyxData`;
-            var date = new Date().toISOString().slice(0, 10);
-            if (logging = true)
-            {
-                if (!fs.existsSync(roamingDir))
-                {
-                    fs.mkdirSync(roamingDir, 
-                        {
-                            recursive: true
-                        });
-                }
+            case "linux":
+                const home = process.env.HOME;
+                var linuxRoaming = `${home}/.NyxData`;
+                var date = new Date().toISOString().slice(0, 10);
+                createFolder(linuxRoaming);
                 fs.writeFileSync(`${linuxRoaming}/error.log`, `${date} ` + `Error: ${error}`);
-            }
-        }
-
-        if (process.platform === "win32")
-        {
-            var date = new Date().toISOString().slice(0, 10);
-            if (logging = true)
-            {
-                if (!fs.existsSync(roamingDir))
-                {
-                    fs.mkdirSync(roamingDir, 
-                        {
-                            recursive: true
-                        });
+                return;
+                
+                case "win32":
+                    createFolder(roamingDir);
+                    var date = new Date().toISOString().slice(0, 10);
+                    fs.writeFileSync(`${roamingDir}/error.log`, `${date} ` + `Error: ${error}`);
+                    return;
                 }
-                fs.writeFileSync(`${roamingDir}/error.log`, `${date} ` + `Error: ${error}`);
-            }
+                return;
         }
-    }
-    catch (ex)
-    {
-
-    }
+        catch (ex)
+        {
+            console.log("There was an error writing to the error log. " + ex);
+        }
 }
 
 function checkFolderExists(dir)
 {
-    if (fs.existsSync(dir))
+    switch (fs.existsSync(dir))
     {
-        folderExists = true;
-    }
-    if (!fs.existsSync(dir))
-    {
-        folderExists = false;
+        case true:
+            folderExists = true;
+            return;
+
+        case false: 
+            folderExists = false;
+            return;
     }
 }
 
@@ -155,5 +127,4 @@ module.exports =
     checkFolderExists,
     folderExists,
     roamingDir,
-    logging
 }

@@ -60,8 +60,6 @@ app.whenReady().then(() =>
         case true:
           createWindow();
           Discord.startDiscord();
-          checkErrorLog();
-          fstream.logError("balls");
           checkPlugins();
           Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
       
@@ -91,7 +89,7 @@ app.whenReady().then(() =>
           offlineWindow();
           return;
       }
-    }, 200);
+    }, 100);
 });
 
 app.on("quit", event => 
@@ -122,7 +120,6 @@ function createWindow()
     catch (ex)
     {
       fstream.logError(ex);
-      //Notification.show("Nyx", "An error occured loading the window. " + ex)
     }
 }
 
@@ -151,7 +148,6 @@ function offlineWindow()
 async function checkInternet()
 {
   Online = await isOnline();
-  console.log(Online);
 }
 
 function socketDisconnect()
@@ -159,37 +155,8 @@ function socketDisconnect()
   Socket.Send("client_disconnect", JSON.stringify([Data.clientString, Data.clientIp]));
 }
 
-function checkErrorLog()
-{
-    var options = 
-    {
-      type: 'question',
-      buttons: ['Yes', 'No'],
-      defaultId: 0,
-      title: 'Nyx',
-      message: 'Do you want to enable error logging?',
-    };
-
-    dialog.showMessageBox(null, options).then( (data) => 
-    {
-      switch (data.response)
-      {
-        case 0:
-          fstream.logging = true;
-          return;
-
-        case 1:
-          fstream.logging = false;
-          return;
-      }
-    })
-}
-
 function checkPlugins()
 {
-  // Add a delay so this popup will show, the two popups want to fight eachother
-  setTimeout(() => 
-  {
     var options = 
     {
       type: 'question',
@@ -204,23 +171,12 @@ function checkPlugins()
       switch (data.response)
       {
         case 0:
-          try
-          {
-            Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
-            return;
-          }
-          catch (ex)
-          {
-            fstream.logError(ex);
-            Alert.show("Nyx", "There was an error loading plugins. Your plugins will not be loaded Error: " + ex)
-          }
+          Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
+          return;
 
-          case 1:
-            {
-              Discord.Update(`NyxApp ${package.version}`, "Plugins disabled")
-              return;
-            }
+        case 1:
+          Discord.Update(`NyxApp ${package.version}`, "Plugins disabled");
+          return;
       }
-      })
-  }, 2000);
+    })
 }

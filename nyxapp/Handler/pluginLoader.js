@@ -1,8 +1,8 @@
-function loadPlugin(pluginName, pluginPath, data) //you can pass data into the plugin loader for plugins that use a paramter, if no paramter is needed you can just leave it blank
+function loadPlugin(fileName, data) //you can pass data into the plugin loader for plugins that use a paramter, if no paramter is needed you can just leave it empty
 {
   try
   {
-    var pluginName = require(pluginPath);
+    var pluginName = require('../Plugins/' + fileName + '.js');
     pluginName.Start(data);
   }
   catch (ex)

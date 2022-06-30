@@ -33,6 +33,7 @@ var path = require("path");
 var link = "http://127.0.0.1:8080/";
 
 var io = require("socket.io-client");
+const { url } = require("inspector");
 
 var socket = io.connect("http://127.0.0.1:8080/");
 
@@ -51,45 +52,7 @@ ClientDefiner.defineClientIp();
 
 app.whenReady().then(() =>
 {
-    checkInternet();
-    //Wait for the variable to get updated
-    setTimeout(() => 
-    {
-      switch (Online)
-      {
-        case true:
-          createWindow();
-          Discord.startDiscord();
-          checkPlugins();
-          Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
-      
-          socket.on("client_message", message => 
-          {
-            console.log(message);
-          });
-          ipc.on("close_application", () => 
-          { 
-            app.quit();
-          });
-          ipc.on("maximize_application", () => 
-          {
-            var window = BrowserWindow.getFocusedWindow();
-            
-            window.maximize();
-          });
-          ipc.on("minimize_application", () => 
-          {
-            var window = BrowserWindow.getFocusedWindow();
-            
-            window.minimize();
-          });
-          return;
-
-        case false:
-          offlineWindow();
-          return;
-      }
-    }, 100);
+  createsplashWindow();
 });
 
 app.on("quit", event => 
@@ -98,7 +61,8 @@ app.on("quit", event =>
   Discord.Disconnect();
 });
 
-function createWindow()
+
+function createClientWindow()
 {
     try
     {
@@ -123,6 +87,70 @@ function createWindow()
     }
 }
 
+function createsplashWindow()
+{
+  const win = new BrowserWindow
+  ({
+    width: 500,
+    height: 500,
+    titleBarStyle: "hidden",
+    frame: false,
+    autoHideMenuBar: true, //hide menu bar
+    icon: __dirname + './Images/Nyx.ico',
+    webPreferences:
+    {
+      devTools: false,
+      preload: path.join(__dirname, "/Preload/preload.js")
+    },
+  })
+  win.loadFile('./html/splashwindow.html');
+  win.center();
+
+  setTimeout(function()
+  {
+    checkInternet();
+    //Wait for the variable to get updated
+  setTimeout(() => 
+  {
+    switch (Online)
+    {
+      case true:
+        win.close();
+        createClientWindow();
+        Discord.startDiscord();
+        checkPlugins();
+        Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
+    
+        socket.on("client_message", message => 
+        {
+          console.log(message);
+        });
+        ipc.on("close_application", () => 
+        { 
+          app.quit();
+        });
+        ipc.on("maximize_application", () => 
+        {
+          var window = BrowserWindow.getFocusedWindow();
+          
+          window.maximize();
+        });
+        ipc.on("minimize_application", () => 
+        {
+          var window = BrowserWindow.getFocusedWindow();
+          
+          window.minimize();
+        });
+        return;
+
+      case false:
+        offlineWindow();
+        return;
+    }
+  }, 100);
+  }, 5000);
+}
+
 function offlineWindow()
 {
   try
@@ -138,6 +166,7 @@ function offlineWindow()
       },
     })
     win.loadFile('./html/offline.html');
+    win.center();
   }
   catch (ex)
   {
@@ -171,6 +200,8 @@ function checkPlugins()
       switch (data.response)
       {
         case 0:
+          //pluginLoader.loadPlugin("example", "errorOutputPlugin");
+          pluginLoader.loadPlugin("example", "examplePlugin");
           Discord.Update(`NyxApp ${package.version}`, "Plugins enabled");
           return;
 

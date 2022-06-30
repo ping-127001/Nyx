@@ -91,10 +91,8 @@ function createsplashWindow()
 {
   const win = new BrowserWindow
   ({
-    width: 500,
-    height: 500,
-    titleBarStyle: "hidden",
-    frame: false,
+    width: 350,
+    height: 350,
     autoHideMenuBar: true, //hide menu bar
     icon: __dirname + './Images/Nyx.ico',
     webPreferences:

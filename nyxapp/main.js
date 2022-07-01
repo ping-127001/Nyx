@@ -47,7 +47,7 @@ if (debugging) //you have survived the if statement cleansing, since you are jus
   app.disableHardwareAcceleration(); //this gets it to stop logging about not supporting GL or something stupid like that
 }
 
-ClientDefiner.defineClientString(64);
+ClientDefiner.defineClientString(128);
 ClientDefiner.defineClientIp();
 
 app.whenReady().then(() =>

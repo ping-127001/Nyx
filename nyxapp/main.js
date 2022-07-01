@@ -93,6 +93,8 @@ function createSplashWindow()
   ({
     width: 350,
     height: 400,
+    titleBarStyle: "hidden",
+    frame: false,
     autoHideMenuBar: true, //hide menu bar
     icon: __dirname + './Images/Nyx.ico',
     webPreferences:

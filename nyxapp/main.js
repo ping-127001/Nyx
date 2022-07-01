@@ -52,7 +52,7 @@ ClientDefiner.defineClientIp();
 
 app.whenReady().then(() =>
 {
-  createsplashWindow();
+  createSplashWindow();
 });
 
 app.on("quit", event => 
@@ -87,12 +87,12 @@ function createClientWindow()
     }
 }
 
-function createsplashWindow()
+function createSplashWindow()
 {
   const win = new BrowserWindow
   ({
     width: 350,
-    height: 350,
+    height: 400,
     autoHideMenuBar: true, //hide menu bar
     icon: __dirname + './Images/Nyx.ico',
     webPreferences:
@@ -108,45 +108,46 @@ function createsplashWindow()
   {
     checkInternet();
     //Wait for the variable to get updated
-  setTimeout(() => 
-  {
-    switch (Online)
+    setTimeout(() => 
     {
-      case true:
-        win.close();
-        createClientWindow();
-        Discord.startDiscord();
-        checkPlugins();
-        Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
-    
-        socket.on("client_message", message => 
-        {
-          console.log(message);
-        });
-        ipc.on("close_application", () => 
-        { 
-          app.quit();
-        });
-        ipc.on("maximize_application", () => 
-        {
-          var window = BrowserWindow.getFocusedWindow();
+      switch (Online)
+      {
+        case true:
+          win.close();
+          createClientWindow();
+          Discord.startDiscord();
+          checkPlugins();
+          Socket.Send("client_connected", `${Data.clientString},${Data.clientIp}`);
           
-          window.maximize();
+          socket.on("client_message", message => 
+          {
+            console.log(message);
+          });
+
+          ipc.on("close_application", () => 
+          { 
+            app.quit();
+          });
+
+          ipc.on("maximize_application", () => 
+          {
+          var window = BrowserWindow.getFocusedWindow();
+           window.maximize();
         });
+        
         ipc.on("minimize_application", () => 
         {
           var window = BrowserWindow.getFocusedWindow();
-          
           window.minimize();
         });
         return;
-
-      case false:
-        offlineWindow();
+        
+        case false:
+          offlineWindow();
         return;
     }
   }, 100);
-  }, 5000);
+}, 5000);
 }
 
 function offlineWindow()

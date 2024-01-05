@@ -12,7 +12,7 @@
     "electron": "^17.2.0"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.4",
     "bcrypt": "^5.0.1",
     "discord-rich-presence": "^0.0.8",
     "ip": "^1.1.8",

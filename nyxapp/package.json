@@ -15,7 +15,7 @@
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "discord-rich-presence": "^0.0.8",
-    "ip": "^1.1.8",
+    "ip": "^1.1.9",
     "is-online": "^10.0.0",
     "socket.io": "^4.5.0",
     "socket.io-client": "^4.5.0"
